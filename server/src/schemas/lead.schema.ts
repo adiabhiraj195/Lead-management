@@ -7,10 +7,9 @@ export const createLeadSchema = z.object({
     .trim()
     .min(1, "Name is required"),
   email: z
-    .string({ message: "Email is required" })
+    .email("Invalid email format")
     .trim()
-    .min(1, "Email is required")
-    .email("Invalid email format"),
+    .min(1, "Email is required"),
   phone: z
     .string({ message: "Phone is required" })
     .trim()
@@ -43,7 +42,7 @@ export const getLeadsQuerySchema = z.object({
 export type GetLeadsQuery = z.infer<typeof getLeadsQuerySchema>;
 
 export const leadIdParamSchema = z.object({
-  id: z.string().uuid({ message: "Invalid lead ID format" }),
+  id: z.uuid({ message: "Invalid lead ID format" }),
 });
 
 export type LeadIdParam = z.infer<typeof leadIdParamSchema>;

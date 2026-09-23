@@ -14,10 +14,9 @@ export const createLeadSchema = z.object({
     .min(1, "Full name is required")
     .max(100, "Name cannot exceed 100 characters"),
   email: z
-    .string()
+    .email("Please enter a valid email address")
     .trim()
-    .min(1, "Email address is required")
-    .email("Please enter a valid email address"),
+    .min(1, "Email address is required"),
   phone: z
     .string()
     .trim()
