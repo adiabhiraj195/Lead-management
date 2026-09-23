@@ -1,12 +1,19 @@
-import express from "express"
+import app from "./app";
+import config from "./config/env";
 
-const app = express();
+const server = app.listen(config.port, () => {
+  console.log(
+    `Server running in ${config.nodeEnv} mode at http://localhost:${config.port}`
+  );
+});
 
-   
+const handleShutdown = (signal: string) => {
+  console.log(`\nReceived ${signal}. Shutting down gracefully...`);
+  server.close(() => {
+    console.log("Server closed.");
+    process.exit(0);
+  });
+};
 
-
-
-
-app.listen(8000, ()=>{
-    console.log("started server at port 8000")
-})
+process.on("SIGTERM", () => handleShutdown("SIGTERM"));
+process.on("SIGINT", () => handleShutdown("SIGINT"));
